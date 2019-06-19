@@ -4,7 +4,7 @@
   "description": "轻量级的http客户端，飞一般的感觉",
   "main": "dist/request.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --require ts-node/register --exit \"src/test/*.ts\""
   },
   "repository": {
     "type": "git",
@@ -24,9 +24,16 @@
     "@types/node": "^12.0.8"
   },
   "devDependencies": {
+    "@leizm/benchmark": "^1.0.1",
+    "@types/axios": "^0.14.0",
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.7",
+    "@types/request": "^2.48.1",
+    "axios": "^0.19.0",
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
     "prettier": "^1.18.2",
+    "request": "^2.88.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.2"
   }

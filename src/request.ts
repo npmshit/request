@@ -29,11 +29,12 @@ export interface Response extends http.IncomingMessage {
 }
 
 export interface RequestOptions {
-  method: string;
+  method?: string;
   url: string;
   qs?: Record<string, any>;
   body?: any;
   json?: boolean;
+  text?: boolean;
   headers?: http.OutgoingHttpHeaders;
 }
 
@@ -43,7 +44,7 @@ export interface RequestOptions {
  */
 export function request(options: RequestOptions): Promise<Response> {
   return new Promise((resolve, reject) => {
-    const method = options.method.toUpperCase();
+    const method = options.method ? options.method.toUpperCase() : "GET";
     const formatted = formatUrl(options.url, options.qs);
     const opts: http.RequestOptions = {
       method,
@@ -61,10 +62,12 @@ export function request(options: RequestOptions): Promise<Response> {
       res.on("data", chunk => buffers.push(chunk));
       res.on("end", () => {
         try {
-          const body = Buffer.concat(buffers).toString("utf8");
+          const body = Buffer.concat(buffers);
           const res2 = res as Response;
-          if (options.json) {
-            res2.body = JSON.parse(body);
+          if (options.text) {
+            res2.body = body.toString("utf8");
+          } else if (options.json) {
+            res2.body = JSON.parse(body.toString("utf8"));
           } else {
             res2.body = body;
           }
