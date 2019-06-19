@@ -1,6 +1,10 @@
 # @blueshit/request
 
-轻量级的http客户端，飞一般的感觉
+轻量级的http客户端，飞一般的感觉。
+
+- 适合作为高性能要求的 HTTP API 客户端的基础库；
+- 性能为主流库 request、axios 的 2 倍左右（见下文的性能测试报告）；
+- 只是对内置 http.request 的简单封装，功能不是很强大；
 
 ## 安装
 
