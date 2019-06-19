@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "轻量级的http客户端，飞一般的感觉",
   "main": "dist/request.js",
+  "typings": "dist/request.d.ts",
+  "files": [
+    "dist/request.js",
+    "dist/request.d.ts"
+  ],
   "scripts": {
+    "prepublish": "rm -rf dist && tsc",
     "test": "mocha --require ts-node/register --exit \"src/test/*test*.ts\"",
     "server": "ts-node src/test/start_server",
     "benchmark": "ts-node src/test/benchmark",
