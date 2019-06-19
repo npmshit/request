@@ -35,7 +35,7 @@ export interface RequestOptions {
   url: string;
   /** QueryString 参数 */
   qs?: Record<string, any>;
-  /** 请求体，仅支持 JSON 对象 */
+  /** 请求体，Buffer 或者 JSON 对象 */
   body?: any;
   /** 预期响应体为 JSON */
   json?: boolean;

@@ -44,7 +44,7 @@ export interface RequestOptions {
   url: string;
   /** QueryString 参数 */
   qs?: Record<string, any>;
-  /** 请求体，仅支持 JSON 对象 */
+  /** 请求体，Buffer 或者 JSON 对象 */
   body?: any;
   /** 预期响应体为 JSON */
   json?: boolean;
@@ -68,8 +68,11 @@ export function request(options: RequestOptions): Promise<Response> {
       timeout: DEFAULT_TIMEOUT,
       agent: DEFAULT_AGENT,
     };
-    if (options.body) {
-      opts.headers!["content-type"] = "application/json";
+    const bodyIsBuffer = options.body && Buffer.isBuffer(options.body);
+    if (options.body && !bodyIsBuffer) {
+      if (!opts.headers!["content-type"]) {
+        opts.headers!["content-type"] = "application/json";
+      }
     }
     const lib = (formatted.isHttps ? https : http) as typeof http;
     const req = lib.request(formatted.url, opts, res => {
@@ -95,7 +98,11 @@ export function request(options: RequestOptions): Promise<Response> {
     });
     req.on("error", reject);
     if (options.body) {
-      req.end(JSON.stringify(options.body));
+      if (bodyIsBuffer) {
+        req.end(options.body);
+      } else {
+        req.end(JSON.stringify(options.body));
+      }
     } else {
       req.end();
     }

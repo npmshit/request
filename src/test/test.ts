@@ -42,4 +42,15 @@ describe("@blueshit", function() {
     });
     expect(res.body).to.deep.equal({ method: "POST", url: "/post?a=123&b=456", body: JSON.stringify({ c: 789 }) });
   });
+
+  it("POST /body?a=123 qs={b:456} body=Buffer.from('abc') json=true", async function() {
+    const res = await request({
+      method: "post",
+      url: url + "/post?a=123",
+      qs: { b: 456 },
+      body: Buffer.from("abc"),
+      json: true,
+    });
+    expect(res.body).to.deep.equal({ method: "POST", url: "/post?a=123&b=456", body: "abc" });
+  });
 });
