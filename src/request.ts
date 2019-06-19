@@ -2,6 +2,11 @@ import * as http from "http";
 import * as https from "https";
 import * as querystring from "querystring";
 
+/**
+ * 格式化URL
+ * @param url
+ * @param qs
+ */
 function formatUrl(url: string, qs?: Record<string, any>) {
   const isHttps = url.substr(0, 6).toLowerCase() === "https:";
   if (qs) {
@@ -14,8 +19,10 @@ function formatUrl(url: string, qs?: Record<string, any>) {
   return { isHttps, url };
 }
 
+/** 默认的请求超时时间 */
 export const DEFAULT_TIMEOUT = 60000;
 
+/** 默认的http Agent */
 export const DEFAULT_AGENT = new http.Agent({
   keepAlive: true,
   keepAliveMsecs: 1000,
@@ -24,17 +31,26 @@ export const DEFAULT_AGENT = new http.Agent({
   timeout: DEFAULT_TIMEOUT,
 });
 
+/** 响应对象 */
 export interface Response extends http.IncomingMessage {
   body: any;
 }
 
+/** 请求参数 */
 export interface RequestOptions {
+  /** 请求方法，默认 GET */
   method?: string;
+  /** 请求地址 */
   url: string;
+  /** QueryString 参数 */
   qs?: Record<string, any>;
+  /** 请求体，仅支持 JSON 对象 */
   body?: any;
+  /** 预期响应体为 JSON */
   json?: boolean;
+  /** 预期响应体为 string */
   text?: boolean;
+  /** 请求头 */
   headers?: http.OutgoingHttpHeaders;
 }
 

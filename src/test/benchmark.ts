@@ -6,8 +6,8 @@ import axios from "axios";
 
 const url = "http://127.0.0.1:34569/text";
 const ret = "GET /text";
-const seconds = 10;
-const delay = 2;
+const seconds = 60;
+const delay = 10;
 const concurrent = 500;
 const b = new Benchmark({ title: "@blueshit/request Benchmark", concurrent, seconds, delay });
 
