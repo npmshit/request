@@ -1,6 +1,6 @@
 {
   "name": "@blueshit/request",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "轻量级的http客户端，飞一般的感觉",
   "main": "dist/request.js",
   "typings": "dist/request.d.ts",
@@ -29,7 +29,7 @@
     "url": "https://github.com/npmshit/request/issues"
   },
   "homepage": "https://github.com/npmshit/request#readme",
-  "dependencies": {
+  "peerDependencies": {
     "@types/node": "^12.0.8"
   },
   "devDependencies": {
