@@ -1,5 +1,5 @@
 import Benchmark from "@leizm/benchmark";
-import { request, DEFAULT_AGENT } from "../request";
+import { request, DEFAULT_HTTP_AGENT } from "../request";
 import * as assert from "assert";
 import * as otherRequest from "request";
 import axios from "axios";
@@ -15,7 +15,7 @@ const report = { blueshit: { success: 0, fail: 0 }, request: { success: 0, fail:
 
 b.addAsync("axios", async () => {
   try {
-    const res = await axios.get(url, { httpAgent: DEFAULT_AGENT });
+    const res = await axios.get(url, { httpAgent: DEFAULT_HTTP_AGENT });
     assert.equal(res.data, ret);
     report.axios.success++;
   } catch (err) {
@@ -32,7 +32,7 @@ b.addAsync("axios", async () => {
     }
   })
   .addCallback("request", done => {
-    otherRequest(url, { agent: DEFAULT_AGENT }, (err, res) => {
+    otherRequest(url, { agent: DEFAULT_HTTP_AGENT }, (err, res) => {
       if (err) {
         // console.log(err);
         report.request.fail++;

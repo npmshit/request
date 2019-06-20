@@ -23,7 +23,16 @@ function formatUrl(url: string, qs?: Record<string, any>) {
 export const DEFAULT_TIMEOUT = 60000;
 
 /** 默认的http Agent */
-export const DEFAULT_AGENT = new http.Agent({
+export const DEFAULT_HTTP_AGENT = new http.Agent({
+  keepAlive: true,
+  keepAliveMsecs: 1000,
+  maxSockets: Infinity,
+  maxFreeSockets: 256,
+  timeout: DEFAULT_TIMEOUT,
+});
+
+/** 默认的https Agent */
+export const DEFAULT_HTTPS_AGENT = new https.Agent({
   keepAlive: true,
   keepAliveMsecs: 1000,
   maxSockets: Infinity,
@@ -66,7 +75,7 @@ export function request(options: RequestOptions): Promise<Response> {
       method,
       headers: Object.assign({}, options.headers),
       timeout: DEFAULT_TIMEOUT,
-      agent: DEFAULT_AGENT,
+      agent: formatted.isHttps ? DEFAULT_HTTPS_AGENT : DEFAULT_HTTP_AGENT,
     };
     const bodyIsBuffer = options.body && Buffer.isBuffer(options.body);
     if (options.body && !bodyIsBuffer) {

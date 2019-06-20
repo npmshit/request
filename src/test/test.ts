@@ -53,4 +53,12 @@ describe("@blueshit", function() {
     });
     expect(res.body).to.deep.equal({ method: "POST", url: "/post?a=123&b=456", body: "abc" });
   });
+
+  it("https", async function() {
+    const res = await request({
+      url: "https://github.com/",
+      text: true,
+    });
+    expect(res.body).to.includes("github");
+  });
 });
