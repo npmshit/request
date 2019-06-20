@@ -1,6 +1,6 @@
 # @blueshit/request
 
-轻量级的http客户端，飞一般的感觉。
+轻量级的http客户端，体验飞一般的感觉。
 
 特性：
 
