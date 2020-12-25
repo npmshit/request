@@ -57,7 +57,7 @@ describe("@blueshit", function () {
   it("timeout", async function () {
     try {
       await request({
-        url: url + "/text",
+        url: "https://baidu.com",
         text: true,
         timeout: 1,
       });
