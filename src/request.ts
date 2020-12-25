@@ -61,6 +61,8 @@ export interface RequestOptions {
   text?: boolean;
   /** 请求头 */
   headers?: http.OutgoingHttpHeaders;
+  /** 超时时间（毫秒）*/
+  timeout?: number;
 }
 
 /**
@@ -74,7 +76,7 @@ export function request(options: RequestOptions): Promise<Response> {
     const opts: http.RequestOptions = {
       method,
       headers: Object.assign({}, options.headers),
-      timeout: DEFAULT_TIMEOUT,
+      timeout: options.timeout || DEFAULT_TIMEOUT,
       agent: formatted.isHttps ? DEFAULT_HTTPS_AGENT : DEFAULT_HTTP_AGENT,
     };
     const bodyIsBuffer = options.body && Buffer.isBuffer(options.body);
@@ -84,10 +86,10 @@ export function request(options: RequestOptions): Promise<Response> {
       }
     }
     const lib = (formatted.isHttps ? https : http) as typeof http;
-    const req = lib.request(formatted.url, opts, res => {
+    const req = lib.request(formatted.url, opts, (res) => {
       req.on("error", reject);
       const buffers: any[] = [];
-      res.on("data", chunk => buffers.push(chunk));
+      res.on("data", (chunk) => buffers.push(chunk));
       res.on("end", () => {
         try {
           const body = Buffer.concat(buffers);
@@ -104,6 +106,9 @@ export function request(options: RequestOptions): Promise<Response> {
           reject(err);
         }
       });
+    });
+    req.on("timeout", () => {
+      reject("timeout");
     });
     req.on("error", reject);
     if (options.body) {

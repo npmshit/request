@@ -46,6 +46,8 @@ export interface RequestOptions {
   text?: boolean;
   /** 请求头 */
   headers?: http.OutgoingHttpHeaders;
+   /** 超时时间（毫秒）*/
+  timeout?: number
 }
 ```
 

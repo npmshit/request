@@ -31,7 +31,7 @@ b.addAsync("axios", async () => {
       report.axios.fail++;
     }
   })
-  .addCallback("request", done => {
+  .addCallback("request", (done) => {
     otherRequest(url, { agent: DEFAULT_HTTP_AGENT }, (err, res) => {
       if (err) {
         // console.log(err);
@@ -49,7 +49,7 @@ b.addAsync("axios", async () => {
       }
     });
   })
-  .addCallback("request #default agent", done => {
+  .addCallback("request #default agent", (done) => {
     otherRequest(url, (err, res) => {
       if (err) {
         // console.log(err);
@@ -77,7 +77,7 @@ b.addAsync("axios", async () => {
     }
   })
   .run()
-  .then(r => {
+  .then((r) => {
     b.print(r);
     console.log(report);
   })
